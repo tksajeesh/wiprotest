@@ -13,4 +13,8 @@ public interface FactView {
     void showTitle(String title);
 
     void loadRecyclerView(ArrayList<FactsModel> factsModel);
+
+    void changeRefreshStatus(boolean showRefresh);
+
+    void showError();
 }

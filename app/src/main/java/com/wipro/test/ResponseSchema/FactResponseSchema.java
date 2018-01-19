@@ -3,7 +3,7 @@ package com.wipro.test.ResponseSchema;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Vishwajit on 19/01/18
@@ -16,7 +16,7 @@ public class FactResponseSchema {
     private String title;
     @SerializedName("rows")
     @Expose
-    private List<Row> rows = null;
+    private ArrayList<Row> rows = null;
 
     public String getTitle() {
         return title;
@@ -26,11 +26,11 @@ public class FactResponseSchema {
         this.title = title;
     }
 
-    public List<Row> getRows() {
+    public ArrayList<Row> getRows() {
         return rows;
     }
 
-    public void setRows(List<Row> rows) {
+    public void setRows(ArrayList<Row> rows) {
         this.rows = rows;
     }
 

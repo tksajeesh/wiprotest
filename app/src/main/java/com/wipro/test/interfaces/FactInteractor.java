@@ -10,8 +10,12 @@ public interface FactInteractor {
 
     void getFacts();
 
+    void setFactListener(FactListener factListener);
+
 
     public interface FactListener{
         void onFactReceived(FactResponseSchema factResponseSchema);
+
+        void errorOccurred();
     }
 }

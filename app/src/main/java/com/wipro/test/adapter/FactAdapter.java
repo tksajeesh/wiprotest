@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.wipro.test.R;
+import com.wipro.test.Utils;
 import com.wipro.test.models.FactsModel;
 
 import java.util.ArrayList;
@@ -35,12 +36,20 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         FactsModel fact = facts.get(position);
         holder.tvTitle.setText(fact.getTitle());
+        holder.tvTitle.setVisibility(Utils.notEmptyOrNull(fact.getTitle()) ? View.VISIBLE : View.GONE);
         holder.tvDescription.setText(fact.getDescription());
+        holder.tvDescription.setVisibility(Utils.notEmptyOrNull(fact.getDescription()) ? View.VISIBLE : View.GONE);
 
-        Picasso.with(holder.ivFactPic.getContext())
-                .load(fact.getImageUrl())
-                .fit()
-                .into(holder.ivFactPic);
+        if (Utils.notEmptyOrNull(fact.getImageUrl())) {
+            holder.ivFactPic.setVisibility(View.VISIBLE);
+            Picasso.with(holder.ivFactPic.getContext())
+                    .load(fact.getImageUrl())
+                    .fit()
+                    .into(holder.ivFactPic);
+        } else {
+            holder.ivFactPic.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
