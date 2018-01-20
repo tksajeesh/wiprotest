@@ -1,5 +1,9 @@
 package com.wipro.test;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +20,7 @@ public class Utils {
     public static boolean notEmptyOrNull(String s) {
         return s != null && !s.trim().equals("");
     }
+
     /**
      * Returns {@link boolean} indicating whether the string is null or empty
      *
@@ -34,5 +39,15 @@ public class Utils {
      */
     public static boolean notEmptyOrNull(ArrayList<?> arrayList) {
         return arrayList != null && !arrayList.isEmpty();
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = null;
+        if (connectivityManager != null) {
+            activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

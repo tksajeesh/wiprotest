@@ -54,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements FactView {
         });
     }
 
+    private void checkConnectionAndGetFacts() {
+        if (Utils.isNetworkAvailable(this))
+            factPresenter.getFact();
+        else
+            Toast.makeText(this, "Please Check Your internet connection.", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void showTitle(String title) {
         if (getSupportActionBar() != null)

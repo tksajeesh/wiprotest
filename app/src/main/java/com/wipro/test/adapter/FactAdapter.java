@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.wipro.test.R;
 import com.wipro.test.Utils;
@@ -33,8 +35,8 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        FactsModel fact = facts.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final FactsModel fact = facts.get(position);
         holder.tvTitle.setText(fact.getTitle());
         holder.tvTitle.setVisibility(Utils.notEmptyOrNull(fact.getTitle()) ? View.VISIBLE : View.GONE);
         holder.tvDescription.setText(fact.getDescription());
@@ -42,12 +44,27 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
 
         if (Utils.notEmptyOrNull(fact.getImageUrl())) {
             holder.ivFactPic.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.VISIBLE);
             Picasso.with(holder.ivFactPic.getContext())
                     .load(fact.getImageUrl())
                     .fit()
-                    .into(holder.ivFactPic);
+                    .into(holder.ivFactPic, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.ivFactPic.setVisibility(View.VISIBLE);
+                            holder.progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            holder.ivFactPic.setVisibility(View.GONE);
+                            holder.progressBar.setVisibility(View.GONE);
+                            fact.setImageUrl(null);
+                        }
+                    });
         } else {
             holder.ivFactPic.setVisibility(View.GONE);
+            holder.progressBar.setVisibility(View.GONE);
         }
 
     }
@@ -62,6 +79,7 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
         TextView tvTitle;
         TextView tvDescription;
         ImageView ivFactPic;
+        ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +87,7 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
             tvTitle = itemView.findViewById(R.id.tv_fact_title);
             tvDescription = itemView.findViewById(R.id.tv_fact_description);
             ivFactPic = itemView.findViewById(R.id.iv_fact_image);
+            progressBar = itemView.findViewById(R.id.progress);
         }
     }
 }
