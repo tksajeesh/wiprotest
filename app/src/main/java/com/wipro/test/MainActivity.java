@@ -5,6 +5,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wipro.test.adapter.FactAdapter;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements FactView {
     private FactAdapter adapter;
     private ArrayList<FactsModel> factsModels;
     private FactPresenter factPresenter;
+    private TextView tvNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements FactView {
                 factPresenter.getFact();
             }
         });
+
+        tvNoData = findViewById(R.id.tv_no_data_found);
+
+        showTitle("");
     }
 
     private void checkConnectionAndGetFacts() {
@@ -69,9 +76,14 @@ public class MainActivity extends AppCompatActivity implements FactView {
 
     @Override
     public void loadRecyclerView(ArrayList<FactsModel> factsModel) {
-        factsModels.clear();
-        factsModels.addAll(factsModel);
-        adapter.notifyDataSetChanged();
+        if (Utils.notEmptyOrNull(factsModel)) {
+            tvNoData.setVisibility(View.GONE);
+            factsModels.clear();
+            factsModels.addAll(factsModel);
+            adapter.notifyDataSetChanged();
+        } else {
+            tvNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -81,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements FactView {
 
     @Override
     public void showError() {
+        tvNoData.setVisibility(View.VISIBLE);
         Toast.makeText(this, "Error while fetching facts", Toast.LENGTH_LONG).show();
     }
 }
