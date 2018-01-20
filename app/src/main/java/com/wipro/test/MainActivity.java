@@ -24,35 +24,49 @@ public class MainActivity extends AppCompatActivity implements FactView {
     private ArrayList<FactsModel> factsModels;
     private FactPresenter factPresenter;
     private TextView tvNoData;
+    private final String FACTS_LIST = "FACTS_LIST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
+        initViews(savedInstanceState);
     }
 
     /**
      * This will initialize the views
+     * Checks if the factsModels is in savedInstanceState to handle the rotation properly.
+     * initializes the adapter and adds it to the recycler view
+     * initializes the presenter and interactor
+     *
+     * @param savedInstanceState
      */
-    private void initViews() {
+    private void initViews(Bundle savedInstanceState) {
 
-        rvFacts = findViewById(R.id.rv_facts);
-        factsModels = new ArrayList<>();
+
+        if (savedInstanceState != null) {
+            factsModels = savedInstanceState.getParcelableArrayList(FACTS_LIST);
+        }
+        if (factsModels == null) {
+            factsModels = new ArrayList<>();
+        }
+
         adapter = new FactAdapter(factsModels);
+        rvFacts = findViewById(R.id.rv_facts);
         rvFacts.setLayoutManager(new LinearLayoutManager(this));
         rvFacts.setAdapter(adapter);
 
         srlRefresh = findViewById(R.id.srl_refresh);
 
         factPresenter = new FactPresenterImpl(this, new FactInteractorImpl());
-        factPresenter.getFact();
+        if (factsModels.isEmpty())
+            checkConnectionAndGetFacts();
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                factPresenter.getFact();
+                checkConnectionAndGetFacts();
             }
         });
 
@@ -61,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements FactView {
         showTitle("");
     }
 
+    /**
+     * This method will check if the internet is connected and only then will it call the api
+     */
     private void checkConnectionAndGetFacts() {
         if (Utils.isNetworkAvailable(this))
             factPresenter.getFact();
@@ -95,5 +112,11 @@ public class MainActivity extends AppCompatActivity implements FactView {
     public void showError() {
         tvNoData.setVisibility(View.VISIBLE);
         Toast.makeText(this, "Error while fetching facts", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(FACTS_LIST, factsModels);
+        super.onSaveInstanceState(outState);
     }
 }

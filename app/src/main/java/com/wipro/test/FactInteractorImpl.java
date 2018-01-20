@@ -21,6 +21,9 @@ public class FactInteractorImpl implements FactInteractor {
         this.factListener = factListener;
     }
 
+    /**
+     * Makes the api call to get facts
+     */
     @Override
     public void getFacts() {
         ApiRequest.getInstance().getFacts(new Callback<FactResponseSchema>() {
