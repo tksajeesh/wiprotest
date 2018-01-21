@@ -18,7 +18,7 @@ public class FactPresenterImpl implements FactPresenter, FactInteractor.FactList
     private FactView factView;
     private FactInteractor factInteractor;
 
-    public FactPresenterImpl(FactView factView, FactInteractor factInteractor) {
+    FactPresenterImpl(FactView factView, FactInteractor factInteractor) {
         this.factView = factView;
         this.factInteractor = factInteractor;
         factInteractor.setFactListener(this);

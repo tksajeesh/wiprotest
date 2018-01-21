@@ -18,13 +18,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FactView {
 
-    private RecyclerView rvFacts;
     private SwipeRefreshLayout srlRefresh;
     private FactAdapter adapter;
     private ArrayList<FactsModel> factsModels;
+    private String screenTitle;
     private FactPresenter factPresenter;
     private TextView tvNoData;
     private final String FACTS_LIST = "FACTS_LIST";
+    private final String SCREEN_TITLE = "SCREEN_TITLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +41,21 @@ public class MainActivity extends AppCompatActivity implements FactView {
      * initializes the adapter and adds it to the recycler view
      * initializes the presenter and interactor
      *
-     * @param savedInstanceState
+     * @param savedInstanceState To handle orientation change
      */
     private void initViews(Bundle savedInstanceState) {
 
 
         if (savedInstanceState != null) {
             factsModels = savedInstanceState.getParcelableArrayList(FACTS_LIST);
-        }
-        if (factsModels == null) {
+            showTitle(savedInstanceState.getString(SCREEN_TITLE));
+        } else {
             factsModels = new ArrayList<>();
+            showTitle("");
         }
 
-        adapter = new FactAdapter(factsModels);
-        rvFacts = findViewById(R.id.rv_facts);
+        adapter = new FactAdapter(factsModels, this);
+        RecyclerView rvFacts = findViewById(R.id.rv_facts);
         rvFacts.setLayoutManager(new LinearLayoutManager(this));
         rvFacts.setAdapter(adapter);
 
@@ -71,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements FactView {
         });
 
         tvNoData = findViewById(R.id.tv_no_data_found);
-
-        showTitle("");
     }
 
     /**
@@ -82,13 +82,14 @@ public class MainActivity extends AppCompatActivity implements FactView {
         if (Utils.isNetworkAvailable(this))
             factPresenter.getFact();
         else
-            Toast.makeText(this, "Please Check Your internet connection.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.check_internet_connection, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showTitle(String title) {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(title);
+        screenTitle = title;
     }
 
     @Override
@@ -111,12 +112,13 @@ public class MainActivity extends AppCompatActivity implements FactView {
     @Override
     public void showError() {
         tvNoData.setVisibility(View.VISIBLE);
-        Toast.makeText(this, "Error while fetching facts", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.error_while_fetching_facts, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(FACTS_LIST, factsModels);
+        outState.putString(SCREEN_TITLE, screenTitle);
         super.onSaveInstanceState(outState);
     }
 }

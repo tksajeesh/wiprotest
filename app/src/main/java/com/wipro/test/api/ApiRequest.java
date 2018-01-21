@@ -11,7 +11,7 @@ import retrofit2.Callback;
 
 public class ApiRequest {
     private static ApiRequest instance;
-    private ApiInterface apiInterface;
+    private final ApiInterface apiInterface;
 
     /**
      * Initialize the api request and api client.
@@ -32,7 +32,7 @@ public class ApiRequest {
 
     /**
      * Api request to get facts
-     * @param callback
+     * @param callback callback for the response of the api
      */
     public void getFacts(Callback<FactResponseSchema> callback) {
         Call<FactResponseSchema> call = apiInterface.getFact();

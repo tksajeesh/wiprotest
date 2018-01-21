@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Test</string>
     <string name="no_data_found">No Data Found</string>
+    <string name="check_internet_connection">Please Check Your internet connection.</string>
+    <string name="error_while_fetching_facts">Error while fetching facts</string>
+    <string name="fact_image">Fact Image</string>
 </resources>

@@ -13,7 +13,7 @@ public interface FactInteractor {
     void setFactListener(FactListener factListener);
 
 
-    public interface FactListener{
+    interface FactListener {
         void onFactReceived(FactResponseSchema factResponseSchema);
 
         void errorOccurred();

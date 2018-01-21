@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Vishwajit on 20/01/18
  */
 
-public class ApiClient {
+class ApiClient {
     private static final String BASE_URL = "https://dl.dropboxusercontent.com/";
     private static Retrofit retrofit = null;
 
@@ -21,7 +21,7 @@ public class ApiClient {
      *
      * @return {@link Retrofit} indicates the retrofit client
      */
-    public static Retrofit getClient() {
+    static Retrofit getClient() {
         if (retrofit == null) {
             final OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

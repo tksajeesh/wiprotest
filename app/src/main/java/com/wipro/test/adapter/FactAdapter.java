@@ -1,15 +1,17 @@
 package com.wipro.test.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.wipro.test.R;
 import com.wipro.test.Utils;
 import com.wipro.test.models.FactsModel;
@@ -22,10 +24,12 @@ import java.util.ArrayList;
 
 public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
 
-    ArrayList<FactsModel> facts;
+    private ArrayList<FactsModel> facts;
+    private Context context;
 
-    public FactAdapter(ArrayList<FactsModel> facts) {
+    public FactAdapter(ArrayList<FactsModel> facts, Context context) {
         this.facts = facts;
+        this.context = context;
     }
 
     @Override
@@ -42,30 +46,21 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
         holder.tvDescription.setText(fact.getDescription());
         holder.tvDescription.setVisibility(Utils.notEmptyOrNull(fact.getDescription()) ? View.VISIBLE : View.GONE);
 
-        if (Utils.notEmptyOrNull(fact.getImageUrl())) {
-            holder.ivFactPic.setVisibility(View.VISIBLE);
-            holder.progressBar.setVisibility(View.VISIBLE);
-            Picasso.with(holder.ivFactPic.getContext())
-                    .load(fact.getImageUrl())
-                    .fit()
-                    .into(holder.ivFactPic, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            holder.ivFactPic.setVisibility(View.VISIBLE);
-                            holder.progressBar.setVisibility(View.GONE);
-                        }
+        holder.ivFactPic.setVisibility(View.VISIBLE);
 
-                        @Override
-                        public void onError() {
-                            holder.ivFactPic.setVisibility(View.GONE);
-                            holder.progressBar.setVisibility(View.GONE);
-                            fact.setImageUrl(null);
-                        }
-                    });
-        } else {
-            holder.ivFactPic.setVisibility(View.GONE);
-            holder.progressBar.setVisibility(View.GONE);
-        }
+        final RequestCreator picasso = Picasso.with(context)
+                .load(fact.getImageUrl()).networkPolicy(NetworkPolicy.OFFLINE);
+        picasso.into(holder.ivFactPic, new Callback() {
+            @Override
+            public void onSuccess() {
+                //Working properly.
+            }
+
+            @Override
+            public void onError() {
+                Picasso.with(context).load(fact.getImageUrl()).into(holder.ivFactPic);
+            }
+        });
 
     }
 
@@ -79,7 +74,6 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
         TextView tvTitle;
         TextView tvDescription;
         ImageView ivFactPic;
-        ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -87,7 +81,6 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewHolder> {
             tvTitle = itemView.findViewById(R.id.tv_fact_title);
             tvDescription = itemView.findViewById(R.id.tv_fact_description);
             ivFactPic = itemView.findViewById(R.id.iv_fact_image);
-            progressBar = itemView.findViewById(R.id.progress);
         }
     }
 }

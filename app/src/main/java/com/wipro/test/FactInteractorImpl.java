@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class FactInteractorImpl implements FactInteractor {
 
-    FactInteractor.FactListener factListener;
+    private FactInteractor.FactListener factListener;
 
     @Override
     public void setFactListener(FactListener factListener) {

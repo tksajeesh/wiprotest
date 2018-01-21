@@ -63,7 +63,7 @@ public class FactsModel implements Parcelable {
     public FactsModel() {
     }
 
-    protected FactsModel(Parcel in) {
+    private FactsModel(Parcel in) {
         this.title = in.readString();
         this.description = in.readString();
         this.imageUrl = in.readString();
