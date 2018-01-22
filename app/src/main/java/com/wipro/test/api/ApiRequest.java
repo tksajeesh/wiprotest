@@ -1,11 +1,13 @@
 package com.wipro.test.api;
 
-import com.wipro.test.ResponseSchema.FactResponseSchema;
+import com.wipro.test.responseschema.FactResponseSchema;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
 /**
+ * This is an Helper class used to make an API call.
+ *
  * Created by Vishwajit on 20/01/18
  */
 

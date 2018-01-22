@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.wipro.test.Utils;
 
 /**
+ * This is a ViewModel for the row of the recycler view of the facts.
  * Created by Vishwajit on 19/01/18
  */
 

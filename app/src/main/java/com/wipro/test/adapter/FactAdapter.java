@@ -19,6 +19,10 @@ import com.wipro.test.models.FactsModel;
 import java.util.ArrayList;
 
 /**
+ *
+ * This is an adapter for the {@link RecyclerView} of Facts it will inflate
+ * the a row for every fact.
+ *
  * Created by Vishwajit on 19/01/18
  */
 

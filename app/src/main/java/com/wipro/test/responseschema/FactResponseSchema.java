@@ -1,4 +1,4 @@
-package com.wipro.test.ResponseSchema;
+package com.wipro.test.responseschema;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 /**
+ * This is The response for the provided api and in GSON format
+ *
  * Created by Vishwajit on 19/01/18
  */
 

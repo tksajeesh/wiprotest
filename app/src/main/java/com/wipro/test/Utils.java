@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import java.util.ArrayList;
 
 /**
+ * This is an Utility class.
+ *
  * Created by Vishwajit on 19/01/18
  */
 
@@ -41,6 +43,12 @@ public class Utils {
         return arrayList != null && !arrayList.isEmpty();
     }
 
+    /**
+     * This method check if the device is connected to internet or not
+     *
+     * @param context The context of the invoking class.
+     * @return true if internet is connected and false otherwise.
+     */
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

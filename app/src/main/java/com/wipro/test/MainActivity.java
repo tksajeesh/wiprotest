@@ -16,6 +16,11 @@ import com.wipro.test.models.FactsModel;
 
 import java.util.ArrayList;
 
+/**
+ * This is the main activity which is our View.
+ * This class handles all the operation on the Views side.
+ */
+
 public class MainActivity extends AppCompatActivity implements FactView {
 
     private SwipeRefreshLayout srlRefresh;
@@ -85,6 +90,11 @@ public class MainActivity extends AppCompatActivity implements FactView {
             Toast.makeText(this, R.string.check_internet_connection, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * This method will set the toolbar title as given
+     *
+     * @param title The toolbar title to be set
+     */
     @Override
     public void showTitle(String title) {
         if (getSupportActionBar() != null)
@@ -92,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements FactView {
         screenTitle = title;
     }
 
+    /**
+     * This method will send the data to the adapter and update the view if the ArrayList is not empty.
+     * If the ArrayList is empty it will show No data Found text.
+     *
+     * @param factsModel The ArrayList to be sent to the adapter.
+     */
     @Override
     public void loadRecyclerView(ArrayList<FactsModel> factsModel) {
         if (Utils.notEmptyOrNull(factsModel)) {
@@ -104,17 +120,31 @@ public class MainActivity extends AppCompatActivity implements FactView {
         }
     }
 
+    /**
+     * This method will set the refreshing status of SwipeRefreshLayout according to the parameter.
+     *
+     * @param showRefresh The status to set.
+     */
     @Override
     public void changeRefreshStatus(boolean showRefresh) {
         srlRefresh.setRefreshing(showRefresh);
     }
 
+    /**
+     * This method will show an error toast if there is any Error while calling the API.
+     */
     @Override
     public void showError() {
         tvNoData.setVisibility(View.VISIBLE);
         Toast.makeText(this, R.string.error_while_fetching_facts, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * This method is used to save the current state of the Activity
+     * in our case we are saving the data to be shown in the recyclerview.
+     *
+     * @param outState The bundle in which we save our state.
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(FACTS_LIST, factsModels);

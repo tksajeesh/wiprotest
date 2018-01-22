@@ -1,9 +1,11 @@
-package com.wipro.test.ResponseSchema;
+package com.wipro.test.responseschema;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * A data for each row of facts received in the {@link FactResponseSchema}
+ *
  * Created by Vishwajit on 19/01/18
  */
 public class Row {

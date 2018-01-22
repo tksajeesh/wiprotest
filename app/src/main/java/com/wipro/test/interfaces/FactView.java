@@ -5,6 +5,9 @@ import com.wipro.test.models.FactsModel;
 import java.util.ArrayList;
 
 /**
+ * This is interface will be implemented by the View i.e. the Activity in our case
+ * for receiving the callbacks from presenter class.
+ *
  * Created by Vishwajit on 19/01/18
  */
 

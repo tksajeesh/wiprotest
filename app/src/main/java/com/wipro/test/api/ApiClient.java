@@ -8,6 +8,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
+ *
+ * This is an Helper class which will generate a {@link Retrofit} singleton object
+ *
  * Created by Vishwajit on 20/01/18
  */
 

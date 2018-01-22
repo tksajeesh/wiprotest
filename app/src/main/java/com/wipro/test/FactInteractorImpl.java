@@ -1,6 +1,6 @@
 package com.wipro.test;
 
-import com.wipro.test.ResponseSchema.FactResponseSchema;
+import com.wipro.test.responseschema.FactResponseSchema;
 import com.wipro.test.api.ApiRequest;
 import com.wipro.test.interfaces.FactInteractor;
 
@@ -9,6 +9,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * This class implements the {@link FactInteractor} interface.
+ * This class does the network call.
+ *
  * Created by Vishwajit on 19/01/18
  */
 

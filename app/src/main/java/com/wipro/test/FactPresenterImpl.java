@@ -1,7 +1,7 @@
 package com.wipro.test;
 
-import com.wipro.test.ResponseSchema.FactResponseSchema;
-import com.wipro.test.ResponseSchema.Row;
+import com.wipro.test.responseschema.FactResponseSchema;
+import com.wipro.test.responseschema.Row;
 import com.wipro.test.interfaces.FactInteractor;
 import com.wipro.test.interfaces.FactPresenter;
 import com.wipro.test.interfaces.FactView;
@@ -10,6 +10,9 @@ import com.wipro.test.models.FactsModel;
 import java.util.ArrayList;
 
 /**
+ * This class implements {@link FactPresenter}.
+ * This class does all the Business logic.
+ *
  * Created by Vishwajit on 19/01/18
  */
 
